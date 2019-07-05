@@ -1,13 +1,5 @@
 import { ProductsService } from './products.service';
-import {
-  Controller,
-  Post,
-  Body,
-  Get,
-  Param,
-  Patch,
-  Delete,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { Product } from './product.model';
 
 @Controller('products')
@@ -16,9 +8,9 @@ export class ProductsController {
 
   @Post()
   async createNewProduct(
-    @Body('title') title: String,
-    @Body('description') description: String,
-    @Body('price') price: Number,
+    @Body('title') title: string,
+    @Body('description') description: string,
+    @Body('price') price: number,
   ): Promise<Product> {
     return await this.productsService.create(title, description, price);
   }
@@ -29,22 +21,22 @@ export class ProductsController {
   }
 
   @Get(':product_id')
-  async getSingleProduct(@Param('product_id') id: String): Promise<Product> {
+  async getSingleProduct(@Param('product_id') id: string): Promise<Product> {
     return await this.productsService.get(id);
   }
 
   @Patch(':product_id')
   async updateSingleProduct(
-    @Param('product_id') id: String,
-    @Body('title') title: String,
-    @Body('description') description: String,
-    @Body('price') price: Number,
+    @Param('product_id') id: string,
+    @Body('title') title: string,
+    @Body('description') description: string,
+    @Body('price') price: number,
   ): Promise<Product> {
     return await this.productsService.update(id, title, description, price);
   }
 
   @Delete(':product_id')
-  async deleteSingleProduct(@Param('product_id') id: String): Promise<Product> {
+  async deleteSingleProduct(@Param('product_id') id: string): Promise<Product> {
     return await this.productsService.delete(id);
   }
 }

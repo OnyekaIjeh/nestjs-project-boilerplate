@@ -5,16 +5,15 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class ProductsService {
-  private products: Product[] = [];
 
   constructor(
     @InjectModel('Product') private readonly product: Model<Product>,
   ) {}
 
   async create(
-    title: String,
-    description: String,
-    price: Number,
+    title: string,
+    description: string,
+    price: number,
   ): Promise<Product> {
     let newProduct = new this.product({ title, description, price });
     newProduct = await newProduct.save();
@@ -25,16 +24,15 @@ export class ProductsService {
     return await this.product.find();
   }
 
-  async get(id: String): Promise<Product> {
-    const product = await this.findProduct(id);
-    return product;
+  async get(id: string): Promise<Product> {
+    return await this.findProduct(id);
   }
 
   async update(
-    id: String,
-    title: String,
-    description: String,
-    price: Number,
+    id: string,
+    title: string,
+    description: string,
+    price: number,
   ): Promise<Product> {
     let product = await this.findProduct(id);
 
@@ -46,18 +44,19 @@ export class ProductsService {
     return product;
   }
 
-  async delete(id: String): Promise<Product> {
+  async delete(id: string): Promise<Product> {
     let product = await this.findProduct(id);
     product = await product.remove();
     return product;
   }
 
-  private async findProduct(id: String): Promise<Product> {
+  private async findProduct(id: string): Promise<Product> {
     let product;
     try {
       product = await this.product.findById(id);
-      if (!product)
+      if (!product) {
         throw new NotFoundException('Could not find any product with that ID');
+      }
     } catch (e) {
       throw new NotFoundException('Could not find any product with that ID');
     }
